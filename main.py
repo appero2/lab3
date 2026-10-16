@@ -12,8 +12,6 @@ pory_dni = ["rano", "wieczor"]
 def stworz_parser():
     """
     Funkcja tworzy parser pobierający argumenty.
-
-    D
     """
 
     parser = argparse.ArgumentParser()
@@ -29,8 +27,8 @@ def stworz_parser():
     parser_trybu.add_argument("-t", action = "store_true", help = "tworzy pliki")
     parser_trybu.add_argument("-o", action = "store_true", help = "odczytuje pliki")
 
-    parser.add_argument("-c", action = "store_true", help = "tworzenie / odczyt plikow w formacie csv.")
-    parser.add_argument("-j", action = "store_true", help = "tworzenie / odczyt plikow w formacie json.")
+    parser.add_argument("-c", "--csv", action = "store_true", help = "tworzenie / odczyt plikow w formacie csv.")
+    parser.add_argument("-j", "--json", action = "store_true", help = "tworzenie / odczyt plikow w formacie json.")
     
     return parser
 
@@ -56,6 +54,8 @@ def parsuj_i_sprawdz_argumenty(args):
     
     Jeśli użytkownik nie podaje trybu odczytu (-o), ani tworzenia (-t) to 
     domyślnie wybierany jest tryb odczytu.
+
+    Jeśli użytkownik nie podał ani tryb csv, ani json domyślnie wybierany jest csv.
     """
 
     lista_miesiecy = parsuj_liste(args.miesiace)
@@ -74,16 +74,27 @@ def parsuj_i_sprawdz_argumenty(args):
         if m not in miesiace:
             raise ValueError(f"Nieznany miesiąc: '{m}'")
 
-    return lista_miesiecy, lista_dni, lista_por
+    if args.tworz:
+        tryb = "tworzenie"
+    else:
+        tryb = "odczyt"
+
+    formaty = []
+    if args.json:
+        formaty.append("json")
+    if args.csv or len(formaty) == 0:
+        formaty.append("csv")
+
+    return lista_miesiecy, lista_dni, lista_por, tryb, formaty
 
 def main():
     parser = stworz_parser()
-
     args = parser.parse_args()
-    parsuj_i_sprawdz_argumenty(args)
-
-    print(args)
-
+    
+    try:
+        argumenty = parsuj_i_sprawdz_argumenty(args)
+    except ValueError as e:
+        parser.error(str(e))
 
 if __name__ == "__main__":
     main()
