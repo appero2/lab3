@@ -1,9 +1,9 @@
 '''
+    Główny plik zarządzający parametrami, wywołujący funkcje.
     Autor: Kacper Kułak
 '''
 
 import argparse
-import sys
 
 miesiace = ["styczen", "luty", "marzec", "kwiecien", "maj", "czerwiec", "lipiec", "sierpien", "wrzesien", "pazdziernik", "listopad", "grudzien"]
 dni_tygodnia = ["poniedzialek", "wtorek", "sroda", "czwartek", "piatek", "sobota", "niedziela"]
