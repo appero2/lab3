@@ -16,10 +16,24 @@ DNI = {"pn": "poniedziałek", "wt": "wtorek", "sr": "środa", "cz": "czwartek",
 PORY = {"r": "rano", "w": "wieczorem"}
 
 
+def rozwin_dni(zakres):
+    # Funkcja przyjmuje zakres dni w formacie "pt-nd" i zwraca listę ['pt', 'sb', 'nd']
+
+    if "-" in zakres:
+        pocz, kon = zakres.split("-")
+        return list(DNI.keys())[list(DNI.keys()).index(pocz):list(DNI.keys()).index(kon)+1]
+    else:
+        return [zakres]
+    
+
 def generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty):
     """
     Generuje ścieżki na podstawie podanych parametrów, zgodnie z poleceniem. 
-    Zwraca listę ścieżek, gdzie każda ścieżka jest w formacie miesiąc/dzień/pora/Dane.csv .
+    Zwraca listę ścieżek, gdzie każda ścieżka jest w formacie miesiąc/dzień/pora/Dane.csv (albo Dane.json).
+    Przyjmuje dane postaci:
+    ["styczen", "luty"], [["pn", "wt"], ["pt"]], ["r", "w"], ["json", "csv"] lub równoważnie
+    ["styczen", "luty"], [["pn", "wt"], ["pt"]], ["r", "w", "r"], ["json", "csv", "csv"] 
+    
     """
     
     sciezki, i = [], 0
@@ -51,5 +65,12 @@ if __name__ == "__main__":
     lista_por = ["r", "w"]
     formaty = ["csv", "json"]
 
-    for s in generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty): 
-        print(s)
+    lista_dni_stara= ["pn-wt", "pt-nd", "cz"]
+
+
+
+    # for s in generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty): 
+    #     print(s)
+
+    for zakres in lista_dni_stara:
+        print(rozwin_dni(zakres))
