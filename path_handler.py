@@ -1,5 +1,6 @@
 """
 Generowanie ścieżek - część II: Krzysztof Guz
+Link do repozytorium: https://github.com/appero2/lab3.git
 """
 
 
@@ -59,18 +60,16 @@ def generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty):
 
 
 if __name__ == "__main__":
-    # Test przy samodzielnym uruchomieniu pliku path_handler.py
+    # Test przy samodzielnym uruchomieniu path_handler.py
+    
     lista_miesiecy = ["styczen", "luty"]
     lista_dni = [["pn", "wt"], ["pt"]]
     lista_por = ["r", "w"]
     formaty = ["csv", "json"]
+    lista_dni_test= ["pn-wt", "pt-nd", "cz"]
 
-    lista_dni_stara= ["pn-wt", "pt-nd", "cz"]
+    for s in generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty): 
+        print(s)
 
-
-
-    # for s in generuj_sciezki(lista_miesiecy, lista_dni, lista_por, formaty): 
-    #     print(s)
-
-    for zakres in lista_dni_stara:
+    for zakres in lista_dni_test:
         print(rozwin_dni(zakres))
